@@ -12,8 +12,7 @@ public class SetSmaller {
     e restituisce vero se e solo se tutti gli elementi del primo insieme sono più piccoli,
     in base al comparatore, di tutti gli elementi del secondo insieme.
 
-
-    Porre particolare attenzione alla scelta della rma.
+    Porre particolare attenzione alla scelta della firma.
      */
 
     /*public static <S extends T,T> boolean isSetSmaller(Set<S> set1, Set<T> set2, Comparator<? super T> comparator) {
@@ -29,7 +28,8 @@ public class SetSmaller {
         return flag;
     }*/
 
-    public static <T> boolean isSetSmaller(Set<? extends T> set1, Set<T> set2, Comparator<? super T> comparator) {
+    // Più garanzie
+    /*public static <T> boolean isSetSmaller(Set<? extends T> set1, Set<T> set2, Comparator<? super T> comparator) {
         boolean flag = true;
 
         for(T el1: set1)
@@ -40,7 +40,37 @@ public class SetSmaller {
             }
 
         return flag;
+    }*/
+
+    // Accetta anche Employee - Manager
+    public static <T> boolean isSetSmaller(Set<? extends T> set1, Set<? extends T> set2, Comparator<? super T> comparator) {
+        boolean flag = true;
+
+        for(T el1: set1)
+            for(T el2: set2) {
+                if (comparator.compare(el1, el2) >= 0) {
+                    flag = false;
+                    break;
+                }
+
+            }
+
+        return flag;
     }
+
+    // Più permissiva ma non corretta (viola la pre-condizione)
+    /*public static <T> boolean isSetSmaller(Collection<? extends T> set1, Collection<T> set2, Comparator<? super T> comparator) {
+        boolean flag = true;
+
+        for(T el1: set1)
+            for(T el2: set2) {
+                if (comparator.compare(el1, el2) >= 0)
+                    flag = false;
+
+            }
+
+        return flag;
+    }*/
 
     public static void main(String[] args) {
         Set<Integer> set1 = new HashSet<>(Arrays.asList(1, 2, 3, 4));
@@ -60,6 +90,7 @@ public class SetSmaller {
 
         System.out.println(SetSmaller.isSetSmaller(setOfEmployeeSmallerThen2, setOfEmployee2, Employee.comparatorBySalary));
         System.out.println(SetSmaller.isSetSmaller(setManager, setOfEmployeeSmallerThen2, Employee.comparatorBySalary));
-        //System.out.println(SetSmaller.isSetSmaller(setEmployee1, setManager, Employee.comparatorBySalary));
+        System.out.println(SetSmaller.isSetSmaller(setOfEmployeeSmallerThen2, setManager, Employee.comparatorBySalary));
+        System.out.println(null instanceof Object);
     }
 }
