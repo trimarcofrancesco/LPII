@@ -24,8 +24,13 @@ public class Employee {
 
     /* Print the Employee details */
     public void print() {
-        System.out.println("Name:"+ name);
-        System.out.println("Salary:" + salary);
+        System.out.println("Name: " + name);
+        System.out.println("Salary: " + salary);
+    }
+
+    @Override
+    public String toString() {
+        return "Name: "+ name + ", Salary :" + salary;
     }
 
     public static final Comparator<Employee> comparatorByName = (a, b) -> a.name.compareTo(b.name);

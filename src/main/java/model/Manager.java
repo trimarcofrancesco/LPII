@@ -27,6 +27,11 @@ public class Manager extends Employee {
     @Override
     public void print() {
         super.print();
-        System.out.println("Bonus:" + bonus);
+        System.out.println("Bonus: " + bonus);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", bonus: " + bonus;
     }
 }
